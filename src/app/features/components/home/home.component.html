@@ -1,1 +1,18 @@
-<p>home works!</p>
+<div class="content">
+  <app-menu></app-menu>
+  <div>
+    <h2 class="home-title">
+      Find your images!
+    </h2>
+    <div class="form-group">
+      <input type="search" class="form-control" (keyup)="search($event)" placeholder="Search image">
+    </div>
+    <div class="photos" *ngFor="let image of images">
+      <img
+      src="{{ image.url_q }}"
+      alt="{{ image.title }}"
+    />
+
+    </div>
+  </div>
+</div>
