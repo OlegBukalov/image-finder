@@ -1,5 +1,5 @@
 import { IFlickrPhoto } from './../../../core/interfaces/photo';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FlickrService } from './../../../core/services/flickr.service';
 
 @Component({
@@ -7,26 +7,31 @@ import { FlickrService } from './../../../core/services/flickr.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   images: IFlickrPhoto[] = [];
   text = '';
+  buttonName = 'Bookmark it!';
+  homePage = true;
 
   constructor( private flickrService: FlickrService ) { }
 
-  ngOnInit(): void {
-  }
-
-  search(event: any) {
+  search(event: any): void {
     this.text = event.target.value.toLowerCase();
     if (this.text && this.text.length > 0) {
       this.flickrService.search(this.text)
         .subscribe((images) => {
           this.images = images;
         })
-        // .toPromise().then(data => {
-        // this.images = data;
-      //}
-      //);
+    }
+  }
+
+  applySearch(text: string): void {
+    text = text.trim().toLowerCase();
+    if (text && text.length>0) {
+      this.flickrService.search(this.text)
+        .subscribe((images) => {
+          this.images = images;
+        })
     }
   }
 

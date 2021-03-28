@@ -1,3 +1,28 @@
 .content {
   display: flex;
 }
+
+.search {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.home-title {
+  margin: 20px 0 0;
+  color: #0082ca;
+}
+
+.search-input {
+  width: 100%;
+}
+
+.search-element {
+  margin-left: 10px;
+}
+
+.empty {
+  margin-right: auto;
+}

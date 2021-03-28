@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FlickrService {
+  imageBookmarks: IFlickrPhoto[] = [];
 
   constructor( private http: HttpClient ) { }
 
@@ -21,26 +22,33 @@ export class FlickrService {
       sort: 'relevance',
       per_page: '12',
       media: 'photos',
-      extras: 'tags,date_taken,owner_name,url_q,url_m',
+      extras: 'tags,date_taken,owner_name,url_q,url_m,url_n',
       format: 'json',
       nojsoncallback: '1',
       page: '1'
     };
 
     return this.http.get<IFlickrOutput>(url, {params}).pipe(map((data) => data.photos.photo));
-    //`api_key=${environment.flickr.key}&text=${text}&format=json&nojsoncallback=1&per_page=12`;
-    // console.log(url + params)
-    // return this.http.get(url + params).pipe(map((data: IFlickrOutput) => {
-    //   const urlArr = [];
-    //   data.photos.photo.forEach((photo: IFlickrPhoto) => {
-    //     console.log(photo)
-    //     const photoObj = {
-    //       url: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}`,
-    //       title: photo.title
-    //     };
-    //     urlArr.push(photoObj);
-    //   });
-    //   return urlArr;
-    // }));
+  }
+
+  addToBookmarks(image: IFlickrPhoto): void {
+    const foundImage = this.findImage(image);
+    if (!foundImage) {
+      this.imageBookmarks.push(image);
+    }
+  }
+
+  getImages(): IFlickrPhoto[] {
+    return this.imageBookmarks;
+  }
+
+  deleteImage(image: IFlickrPhoto): void {
+    const index = this.imageBookmarks.indexOf(image);
+    this.imageBookmarks.splice(index, 1);
+  }
+
+  findImage(image: IFlickrPhoto): IFlickrPhoto | undefined {
+    const findImage = this.imageBookmarks.find(item => item.id === image.id);
+    return findImage;
   }
 }

@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="container">
+    <img
+      src="{{ image.url_q }}"
+      alt="{{ image.title }}"
+      class="card-image"
+    />
+    <div class="card-footer">
+      <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="actionWithBookmarks()"
+      class="bookmark-btn"
+    >
+      {{buttonName}}
+    </button>
+    <mat-form-field *ngIf="homePage">
+      <input
+        matInput
+        type="text"
+        placeholder="Some tags?"
+        [value]="image.tags"
+        disabled
+      />
+    </mat-form-field>
+    </div>
+  </div>
+</div>

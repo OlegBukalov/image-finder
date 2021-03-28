@@ -6,6 +6,7 @@ export interface IFlickrPhoto {
   tags: string;
   url_q: string;
   url_m: string;
+  url_n: string;
 }
 
 export interface IFlickrOutput {

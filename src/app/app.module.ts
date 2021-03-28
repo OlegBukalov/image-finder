@@ -10,6 +10,11 @@ import { HomeComponent } from './features/components/home/home.component';
 import { BookmarksComponent } from './features/components/bookmarks/bookmarks.component';
 import { MenuComponent } from './features/components/menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { ImageCardComponent } from './features/components/image-card/image-card.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +23,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FooterComponent,
     HomeComponent,
     BookmarksComponent,
-    MenuComponent
+    MenuComponent,
+    ImageCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

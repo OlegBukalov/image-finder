@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IFlickrPhoto } from './../../../core/interfaces/photo';
+import { FlickrService } from './../../../core/services/flickr.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bookmarks.component.scss']
 })
 export class BookmarksComponent implements OnInit {
+  images: IFlickrPhoto[] = [];
+  buttonName = 'Remove it!';
+  homePage = false;
 
-  constructor() { }
+  constructor( private flickrService: FlickrService ) { }
 
   ngOnInit(): void {
+    this.images = this.flickrService.getImages();
   }
 
 }

@@ -1,18 +1,35 @@
 <div class="content">
   <app-menu></app-menu>
-  <div>
+  <div class="search">
     <h2 class="home-title">
       Find your images!
     </h2>
-    <div class="form-group">
-      <input type="search" class="form-control" (keyup)="search($event)" placeholder="Search image">
+    <mat-form-field class="search-input">
+      <input
+        matInput
+        type="text"
+        placeholder="Search images"
+        [(ngModel)]="text"
+        (keyup.enter)="applySearch(text)"
+        (blur)="applySearch(text)"
+      />
+    </mat-form-field>
+    <div
+      *ngIf="images.length>0; else empty"
+      class="image-list"
+    >
+      <div *ngFor="let image of images">
+        <app-image-card
+          [image]="image"
+          [buttonName]="buttonName"
+          [homePage]="homePage"
+        ></app-image-card>
+      </div>
     </div>
-    <div class="photos" *ngFor="let image of images">
-      <img
-      src="{{ image.url_q }}"
-      alt="{{ image.title }}"
-    />
-
-    </div>
+    <ng-template #empty>
+      <span class="empty">
+        No images here. Would you try to search for anything else?
+      </span>
+    </ng-template>
   </div>
 </div>
