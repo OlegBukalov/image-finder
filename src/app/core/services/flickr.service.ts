@@ -1,9 +1,11 @@
-import { IFlickrOutput, IFlickrPhoto } from './../interfaces/photo';
-import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { LocalStorageService } from './local-storage.service';
+import { IFlickrOutput, IFlickrPhoto } from './../interfaces/photo';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,10 @@ import { Observable } from 'rxjs';
 export class FlickrService {
   imageBookmarks: IFlickrPhoto[] = [];
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
+  ) { }
 
   search(text: string): Observable<IFlickrPhoto[]> {
     const url = 'https://api.flickr.com/services/rest/';
@@ -35,16 +40,38 @@ export class FlickrService {
     const foundImage = this.findImage(image);
     if (!foundImage) {
       this.imageBookmarks.push(image);
+      this.localStorageService.setItem('images', this.imageBookmarks);
     }
+    console.log(this.localStorageService.getItem('images'))
   }
 
   getImages(): IFlickrPhoto[] {
+    if (this.imageBookmarks.length === 0) {
+      const imagesFromLocalStorage = this.localStorageService.getItem('images');
+      if (Array.isArray(imagesFromLocalStorage) ) {
+        for (let index = 0; index < imagesFromLocalStorage.length; index++) {
+          const saveImage = imagesFromLocalStorage[index];
+          const image: IFlickrPhoto = {
+            id: saveImage.id,
+            secret: saveImage.secret,
+            server: saveImage.server,
+            title: saveImage.title,
+            tags: saveImage.tags,
+            url_q: saveImage.url_q,
+            url_m: saveImage.url_m,
+            url_n: saveImage.url_n
+          }
+          this.imageBookmarks.push(image);
+        }
+      }
+    }
     return this.imageBookmarks;
   }
 
   deleteImage(image: IFlickrPhoto): void {
     const index = this.imageBookmarks.indexOf(image);
     this.imageBookmarks.splice(index, 1);
+    this.localStorageService.setItem('images', this.imageBookmarks);
   }
 
   findImage(image: IFlickrPhoto): IFlickrPhoto | undefined {
