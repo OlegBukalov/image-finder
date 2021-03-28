@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ImageCardComponent } from './features/components/image-card/image-card.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ImageCardComponent } from './features/components/image-card/image-card.
     FormsModule,
     MatButtonModule,
     MatInputModule,
+    MatPaginatorModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

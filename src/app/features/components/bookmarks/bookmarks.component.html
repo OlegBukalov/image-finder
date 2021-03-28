@@ -1,14 +1,12 @@
 <div class="content">
   <app-menu></app-menu>
   <div class="bookmark-container">
-    <div class="image-list">
-      <div *ngFor="let image of images">
-        <app-image-card
+    <mat-list class="image-list">
+      <app-image-card *ngFor="let image of images"
           [image]="image"
           [buttonName]="buttonName"
-          [homePage]="homePage"
-        ></app-image-card>
-      </div>
-    </div>
+          [homePage]="homePage">
+      </app-image-card>
+    </mat-list>
   </div>
 </div>

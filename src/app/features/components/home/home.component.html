@@ -10,21 +10,28 @@
         type="text"
         placeholder="Search images"
         [(ngModel)]="text"
-        (keyup.enter)="applySearch(text)"
-        (blur)="applySearch(text)"
+        (keyup.enter)="search(text)"
+        (blur)="search(text)"
       />
     </mat-form-field>
     <div
       *ngIf="images.length>0; else empty"
-      class="image-list"
     >
-      <div *ngFor="let image of images">
-        <app-image-card
-          [image]="image"
-          [buttonName]="buttonName"
-          [homePage]="homePage"
-        ></app-image-card>
-      </div>
+      <mat-paginator
+        [length]="images.length"
+        [pageSize]=12
+        [pageSizeOptions]="[12, 24, 48]"
+        (page)="handlePage($event)"
+        showFirstLastButtons="false"
+      >
+      </mat-paginator>
+      <mat-list class="image-list">
+        <app-image-card *ngFor="let image of (images | slice: lowValue : highValue)"
+            [image]="image"
+            [buttonName]="buttonName"
+            [homePage]="homePage">
+        </app-image-card>
+      </mat-list>
     </div>
     <ng-template #empty>
       <span class="empty">

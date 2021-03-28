@@ -12,6 +12,8 @@ import { environment } from './../../../environments/environment';
 })
 export class FlickrService {
   imageBookmarks: IFlickrPhoto[] = [];
+  prevText = '';
+  currentPage = 1;
 
   constructor(
     private http: HttpClient,
@@ -19,13 +21,19 @@ export class FlickrService {
   ) { }
 
   search(text: string): Observable<IFlickrPhoto[]> {
+    if (this.prevText === text) {
+      this.currentPage++;
+    } else {
+      this.currentPage = 1;
+    }
+    this.prevText = text;
     const url = 'https://api.flickr.com/services/rest/';
     const params = {
       api_key: environment.flickr.key,
       text: text,
       method: 'flickr.photos.search',
       sort: 'relevance',
-      per_page: '12',
+      per_page: '1000',
       media: 'photos',
       extras: 'tags,date_taken,owner_name,url_q,url_m,url_n',
       format: 'json',
