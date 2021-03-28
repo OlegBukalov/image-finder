@@ -50,7 +50,6 @@ export class FlickrService {
       this.imageBookmarks.push(image);
       this.localStorageService.setItem('images', this.imageBookmarks);
     }
-    console.log(this.localStorageService.getItem('images'))
   }
 
   getImages(): IFlickrPhoto[] {

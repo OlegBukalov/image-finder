@@ -5,9 +5,10 @@
 .bookmark-container {
     margin: 0 20px;
     width: 100%;
-    align-items: center;
+    text-align: -webkit-center;
 }
 
 .mat-list-base {
   display: grid;
+  width: fit-content;
 }
