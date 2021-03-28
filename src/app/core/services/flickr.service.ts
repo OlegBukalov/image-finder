@@ -20,17 +20,17 @@ export class FlickrService {
     private localStorageService: LocalStorageService
   ) { }
 
-  search(text: string): Observable<IFlickrPhoto[]> {
-    if (this.prevText === text) {
+  search(keyText: string): Observable<IFlickrPhoto[]> {
+    if (this.prevText === keyText) {
       this.currentPage++;
     } else {
       this.currentPage = 1;
     }
-    this.prevText = text;
+    this.prevText = keyText;
     const url = 'https://api.flickr.com/services/rest/';
     const params = {
       api_key: environment.flickr.key,
-      text: text,
+      text: keyText,
       method: 'flickr.photos.search',
       sort: 'relevance',
       per_page: '1000',
@@ -56,8 +56,7 @@ export class FlickrService {
     if (this.imageBookmarks.length === 0) {
       const imagesFromLocalStorage = this.localStorageService.getItem('images');
       if (Array.isArray(imagesFromLocalStorage) ) {
-        for (let index = 0; index < imagesFromLocalStorage.length; index++) {
-          const saveImage = imagesFromLocalStorage[index];
+        for (const saveImage of imagesFromLocalStorage) {
           const image: IFlickrPhoto = {
             id: saveImage.id,
             secret: saveImage.secret,
@@ -67,7 +66,7 @@ export class FlickrService {
             url_q: saveImage.url_q,
             url_m: saveImage.url_m,
             url_n: saveImage.url_n
-          }
+          };
           this.imageBookmarks.push(image);
         }
       }

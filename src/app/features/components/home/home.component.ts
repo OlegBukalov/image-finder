@@ -23,11 +23,11 @@ export class HomeComponent {
 
   search(text: string): void {
     text = text.trim().toLowerCase();
-    if (text && text.length>0) {
+    if (text && text.length > 0) {
       this.flickrService.search(this.text)
         .subscribe((images) => {
           this.images = images;
-        })
+        });
     }
   }
 
